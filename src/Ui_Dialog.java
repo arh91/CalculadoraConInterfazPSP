@@ -9,6 +9,12 @@
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
+
 public class Ui_Dialog implements com.trolltech.qt.QUiForm<QDialog>
 {
     public QPushButton CJ_Button;
@@ -29,6 +35,26 @@ public class Ui_Dialog implements com.trolltech.qt.QUiForm<QDialog>
     boolean asteriscoPulsado = false;
 
     String cadena;
+
+
+    String Host = "localhost";
+    int Puerto = 6000;  //Utilizamos el puerto 6000 para conectar el Cliente con el Servidor
+
+    Socket Cliente = new Socket(Host, Puerto); //Conexión en local a través del puerto 6000
+
+    // Creo flujo de salida al servidor
+    PrintWriter cadenaEnviada = new PrintWriter(Cliente.getOutputStream(), true);
+    PrintWriter cadenaEnviadaDos = new PrintWriter(Cliente.getOutputStream(), true);
+
+    // Creo flujo de entrada para el servidor
+    BufferedReader cadenaRecibida = new BufferedReader(new InputStreamReader(Cliente.getInputStream()));
+
+    // Creo flujo para entrada estándar
+    BufferedReader entradaUsuario = new BufferedReader(new InputStreamReader(System.in));
+
+    String boton = "", numero = "", respuestaServidor = "HOLA";
+
+
 
     public Ui_Dialog() { super(); }
 
@@ -112,27 +138,34 @@ public class Ui_Dialog implements com.trolltech.qt.QUiForm<QDialog>
 
 
     public void CJ(){
-
-            RespuestaServidor.setText("Introduce un número en metros cuadrados.");
-            String numero = EntradaUsuario.getText();
-            CJ_Button.clicked.connect(enviarDatosCJ(numero);
             CJPulsado = true;
+            RespuestaServidor.setText("Introduce un número en metros cuadrados.");
+            numero = EntradaUsuario.getText();
     }
 
     public void X(){
-
+        XPulsado = true;
+        RespuestaServidor.setText("Introduce el número de meses que has trabajado.");
+        numero = EntradaUsuario.getText();
     }
 
     public void PR(){
-
+        PRPulsado = true;
+        RespuestaServidor.setText("Introduce un número cualquiera.");
+        numero = EntradaUsuario.getText();
     }
 
     public void R(){
 
+        RPulsado = true;
+        RespuestaServidor.setText("Introduce el precio de gasolina por litro que has pagado.");
+        numero = EntradaUsuario.getText();
     }
 
 
     public void enviarDatosCJ(String numero){
+        boton = "CJ";
+
         while(true) {
             if (contieneSoloNumeros(numero)) {
                 break;
@@ -143,6 +176,22 @@ public class Ui_Dialog implements com.trolltech.qt.QUiForm<QDialog>
                 RespuestaServidor.setText("Introduce sólo caracteres numéricos.");
             }
         }
+
+        while (boton != null && numero != null) {
+            cadenaEnviada.println(boton); // envio cadena al servidor
+            cadenaEnviadaDos.println(numero);
+            try {
+                respuestaServidor = cadenaRecibida.readLine(); // recibo cadena del servidor
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            RespuestaServidor.setText(respuestaServidor);
+
+            /*if (respuestaServidor.equals("END!")) { // si la cadena recibida del servidor es END, finaliza conexión con el Servidor y fin de clase Cliente
+                break;
+            }*/
+        }
+
     }
 
     public void enviarDatosX(String numero) {
