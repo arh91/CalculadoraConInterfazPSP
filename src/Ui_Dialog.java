@@ -6,8 +6,6 @@
  ** WARNING! All changes made in this file will be lost when recompiling ui file!
  ********************************************************************************/
 
-package CalculadoraCliente.src;
-
 import com.trolltech.qt.core.*;
 import com.trolltech.qt.gui.*;
 
@@ -23,6 +21,14 @@ public class Ui_Dialog implements com.trolltech.qt.QUiForm<QDialog>
     public QPushButton enviarButton;
     public QLabel labelUsuario;
     public QLabel labelServidor;
+
+    boolean CJPulsado = false;
+    boolean XPulsado = false;
+    boolean PRPulsado = false;
+    boolean RPulsado = false;
+    boolean asteriscoPulsado = false;
+
+    String cadena;
 
     public Ui_Dialog() { super(); }
 
@@ -76,9 +82,88 @@ public class Ui_Dialog implements com.trolltech.qt.QUiForm<QDialog>
         enviarButton.setText(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "ENVIAR", null));
         labelUsuario.setText(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "Entrada Usuario", null));
         labelServidor.setText(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "Respuesta Servidor", null));
+
+        CJ_Button.clicked.connect(this, CJ());
+        X_Button.clicked.connect(this, X());
+        PR_Button.clicked.connect(this, PR());
+        R_Button.clicked.connect(this, R());
+        asteriscoButton.clicked.connect(this, enviarAsterisco());
+
+        if(CJPulsado){
+            enviarButton.clicked.connect(this, enviarDatosCJ(cadena));
+        }
+        if(XPulsado){
+            enviarButton.clicked.connect(this, enviarDatosX(cadena));
+        }
+        if(PRPulsado) {
+            enviarButton.clicked.connect(this, enviarDatosPR(cadena));
+        }
+        if(RPulsado) {
+            enviarButton.clicked.connect(this, enviarDatosR(cadena));
+        }
+        if(asteriscoPulsado){
+            enviarButton.clicked.connect(this, enviarAsterisco(cadena));
+        }
+    }
+
+
+
     } // retranslateUi
 
-}
+
+    public void CJ(){
+
+            RespuestaServidor.setText("Introduce un número en metros cuadrados.");
+            String numero = EntradaUsuario.getText();
+            CJ_Button.clicked.connect(enviarDatosCJ(numero);
+            CJPulsado = true;
+    }
+
+    public void X(){
+
+    }
+
+    public void PR(){
+
+    }
+
+    public void R(){
+
+    }
+
+
+    public void enviarDatosCJ(String numero){
+        while(true) {
+            if (contieneSoloNumeros(numero)) {
+                break;
+            }
+            if (esDecimal(numero)) {
+                RespuestaServidor.setText("Sólo se puede introducir un número entero.");
+            } else {
+                RespuestaServidor.setText("Introduce sólo caracteres numéricos.");
+            }
+        }
+    }
+
+    public void enviarDatosX(String numero) {
+
+    }
+
+    public void enviarDatosPR(String numero) {
+
+    }
+
+    public void enviarDatosR(String numero) {
+
+    }
+
+    public void enviarAsterisco(String numero){
+
+    }
+
+
+
+
 
 
 
