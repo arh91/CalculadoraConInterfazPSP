@@ -20,6 +20,9 @@ public class Ui_Dialog implements com.trolltech.qt.QUiForm<QDialog>
     public QPushButton asteriscoButton;
     public QLineEdit RespuestaServidor;
     public QLineEdit EntradaUsuario;
+    public QPushButton enviarButton;
+    public QLabel labelUsuario;
+    public QLabel labelServidor;
 
     public Ui_Dialog() { super(); }
 
@@ -41,13 +44,22 @@ public class Ui_Dialog implements com.trolltech.qt.QUiForm<QDialog>
         R_Button.setGeometry(new QRect(370, 190, 251, 161));
         asteriscoButton = new QPushButton(Dialog);
         asteriscoButton.setObjectName("asteriscoButton");
-        asteriscoButton.setGeometry(new QRect(190, 380, 251, 161));
+        asteriscoButton.setGeometry(new QRect(10, 380, 251, 161));
         RespuestaServidor = new QLineEdit(Dialog);
         RespuestaServidor.setObjectName("RespuestaServidor");
-        RespuestaServidor.setGeometry(new QRect(60, 680, 531, 71));
+        RespuestaServidor.setGeometry(new QRect(60, 690, 531, 71));
         EntradaUsuario = new QLineEdit(Dialog);
         EntradaUsuario.setObjectName("EntradaUsuario");
-        EntradaUsuario.setGeometry(new QRect(222, 590, 191, 31));
+        EntradaUsuario.setGeometry(new QRect(200, 600, 231, 31));
+        enviarButton = new QPushButton(Dialog);
+        enviarButton.setObjectName("enviarButton");
+        enviarButton.setGeometry(new QRect(370, 380, 251, 161));
+        labelUsuario = new QLabel(Dialog);
+        labelUsuario.setObjectName("labelUsuario");
+        labelUsuario.setGeometry(new QRect(270, 570, 101, 16));
+        labelServidor = new QLabel(Dialog);
+        labelServidor.setObjectName("label_2");
+        labelServidor.setGeometry(new QRect(270, 660, 121, 16));
         retranslateUi(Dialog);
 
         Dialog.connectSlotsByName();
@@ -61,7 +73,13 @@ public class Ui_Dialog implements com.trolltech.qt.QUiForm<QDialog>
         PR_Button.setText(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "PR", null));
         R_Button.setText(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "R", null));
         asteriscoButton.setText(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "*", null));
+        enviarButton.setText(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "ENVIAR", null));
+        labelUsuario.setText(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "Entrada Usuario", null));
+        labelServidor.setText(com.trolltech.qt.core.QCoreApplication.translate("Dialog", "Respuesta Servidor", null));
     } // retranslateUi
+
+}
+
 
 
 
@@ -94,6 +112,7 @@ public class Ui_Dialog implements com.trolltech.qt.QUiForm<QDialog>
                 return false;
             }
         }
+
         if(contador == 0){
             return false;
         }
